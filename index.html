@@ -1530,6 +1530,29 @@
             <p>&copy; 2026 동화시스템. All Rights Reserved. | LEIBINGER 공식 파트너</p>
             <p style="margin-top: 10px;">독일 프리미엄 CIJ 프린터의 한국 공식 공급업체</p>
         </div>
+
+
+    /*popup*/
+        <div class="popup-overlay" id="myPopup">
+            <div class="popup-container">
+                <div class="popup-header">
+                    <h3 class="popup-title">팝업 제목</h3>
+                    <button class="popup-close-x" onclick="closePopup('myPopup')">×</button>
+                </div>
+                
+                <div class="popup-body">
+                    <!-- 여기에 내용 입력 -->
+                </div>
+                
+                <div class="popup-footer">
+                    <div class="popup-no-show">
+                        <input type="checkbox" id="noShow-myPopup">
+                        <label for="noShow-myPopup">다시 보지 않기</label>
+                    </div>
+                    <button class="popup-close-btn" onclick="closePopup('myPopup')">닫기</button>
+                </div>
+            </div>
+        </div>
     </footer>
     
     <!-- AOS Animation Library -->
@@ -1645,6 +1668,20 @@
                 }
             });
         });
+
+        // popup
+        function openPopup(id) {
+        document.getElementById(id).classList.add('active');
+    }
+    
+    function closePopup(id) {
+        const checkbox = document.getElementById('noShow-' + id);
+        if (checkbox && checkbox.checked) {
+            // 쿠키 저장 (7일간)
+            document.cookie = 'hidePopup_' + id + '=true; max-age=' + (60*60*24*7);
+        }
+        document.getElementById(id).classList.remove('active');
+    }
     </script>
 </body>
 </html>
