@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동화시스템 - LEIBINGER CIJ 프린터 공식 파트너</title>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+
+    @font-face {
+    font-family: 'Paperozi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-1Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Paperozi';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-2ExtraLight.woff2') format('woff2');
+        font-weight: 200;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Paperozi';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-3Light.woff2') format('woff2');
+        font-weight: 300;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Paperozi';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Paperozi';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+        font-weight: 500;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Paperozi';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2');
+        font-weight: 600;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Paperozi';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Paperozi';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+        font-weight: 800;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Paperozi';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-9Black.woff2') format('woff2');
+        font-weight: 900;
+        font-display: swap;
+    }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #003087;
+            --secondary-color: #0066cc;
+            --accent-color: #e63946;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --bg-light: #ffffff;
+            --bg-section: #fafafa;
+            --border-color: #e5e5e5;
+        }
+        
+        body {
+            font-family: 'Paperozi', 'Malgun Gothic', sans-serif;
+            letter-spacing: 3px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            padding: 10px 0;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            letter-spacing: 1px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo > img{
+            width:400px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        
+        .nav-menu a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: all 0.3s;
+        }
+        
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 120px 40px 80px;
+            scroll-snap-align: start;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y proximity;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 24px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        
+        p {
+            color: var(--text-light);
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        /* Home Section */
+        #home {
+            background-image: url("https://leibinger-group.com/application/files/4417/6008/1776/Slider-2D.jpg");
+            /*background: linear-gradient(135deg, #003087 0%, #0066cc 100%);*/
+            color: white;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #home::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        
+        .home-content {
+            position: relative;
+            z-index: 1;
+            padding:30px;
+            border-radius: 20px;
+            width:100vw;
+            backdrop-filter: brightness(90%) blur(3px);
+        }
+        
+        .home-content h1 {
+            color: white;
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+        
+        .home-content p {
+            color: rgba(255,255,255,0.9);
+            font-size: 22px;
+            margin-bottom: 40px;
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            background: #d62839;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(230,57,70,0.4);
+        }
+        
+        /* About Section */
+        #about {
+            background: var(--bg-section);
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+            align-items: center;
+        }
+        
+        .about-content ul {
+            list-style: none;
+            margin-top: 30px;
+        }
+        
+        .about-content ul li {
+            padding: 15px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-light);
+            font-size: 18px;
+        }
+        
+        .about-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .about-image {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+        
+        /* Product Sections */
+        .product-section {
+            background: white;
+        }
+        
+        .product-section:nth-child(even) {
+            background: var(--bg-section);
+        }
+        
+        .product-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        .product-image {
+            background: var(--bg-section);
+            padding: 60px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .pr-img-text{
+            padding: 80px 40px; border-radius: 10px; backdrop-filter: brightness(95%);
+        }
+
+                /*additional*/
+        #pr-img-3up{
+            background-image: url("https://leibinger-group.com/application/files/8517/3200/2947/LEIBINGER_JET3_UP_800x550.png")
+        }
+        #pr-img-2neo{
+            background-image: url("https://leibinger-group.com/application/files/4717/3200/2672/LEIBINGER_JET2_NEO_800x550.png")
+        }
+        #pr-img-2neos{
+            background-image: url("https://leibinger-group.com/application/files/9517/3200/2785/LEIBINGER_JET2_NEO__S_800x550.png")
+        }
+        #pr-img-rapid{
+            background-image: url("https://leibinger-group.com/application/files/5717/3200/2225/LEIBINGER_JET_RAPID_800x550.png")
+        }
+
+
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .product-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .product-section:nth-child(even) .feature-card {
+            background: white;
+            border: 1px solid var(--border-color);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .spec-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+        
+        .spec-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .spec-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .spec-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .spec-value {
+            color: var(--text-light);
+        }
+        
+        /* Compare Section */
+        #compare {
+            background: var(--bg-section);
+        }
+        
+        .compare-table-wrapper {
+            overflow-x: auto;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        thead {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        th, td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        tbody tr:hover {
+            background: var(--bg-section);
+        }
+        
+        tbody tr:nth-child(even) {
+            background: rgba(220,38,38,0.02);
+        }
+        
+        /* Consumables Section */
+        #consumables {
+            background: white;
+        }
+        
+        .consumables-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .consumable-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .consumable-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .consumable-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-section);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+        
+        .consumable-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        
+        .consumable-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        /* Contact Section */
+        #contact {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        #contact h2 {
+            color: white;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .contact-details h3 {
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .contact-details p {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+
+
+
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        footer p {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+            
+            .home-content h1 {
+                font-size: 40px;
+            }
+            
+            .about-grid,
+            .product-hero,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .consumables-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            section {
+                padding: 100px 20px 60px;
+            }
+            
+            .nav-container {
+                padding: 15px 20px;
+            }
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+        
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-left: 3px solid white;
+            border-bottom: 3px solid white;
+            transform: rotate(-45deg);
+        }
+        
+        /* Page Indicator */
+        .page-indicator {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .indicator-dot:hover {
+            background: var(--secondary-color);
+            transform: scale(1.3);
+        }
+        
+        .indicator-dot.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: scale(1.5);
+        }
+        
+        .indicator-dot::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--text-dark);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator-dot:hover::before {
+            opacity: 1;
+            right: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .page-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo"><img src="dhDotLogo.svg"></a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">홈</a></li>
+                <li><a href="#about">회사소개</a></li>
+                <li><a href="#jet3up">JET3 UP</a></li>
+                <li><a href="#jet2neo">JET2 NEO</a></li>
+                <li><a href="#jet2neos">JET2 NEO S</a></li>
+                <li><a href="#jetrapid">JET RAPID</a></li>
+                <li><a href="#compare">제품비교</a></li>
+                <li><a href="#consumables">부자재</a></li>
+                <li><a href="#contact">문의</a></li>
+            </ul>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Indicator -->
+    <div class="page-indicator" id="pageIndicator">
+        <div class="indicator-dot active" data-section="home" data-tooltip="홈"></div>
+        <div class="indicator-dot" data-section="about" data-tooltip="회사소개"></div>
+        <div class="indicator-dot" data-section="jet3up" data-tooltip="JET3 UP"></div>
+        <div class="indicator-dot" data-section="jet2neo" data-tooltip="JET2 NEO"></div>
+        <div class="indicator-dot" data-section="jet2neos" data-tooltip="JET2 NEO S"></div>
+        <div class="indicator-dot" data-section="jetrapid" data-tooltip="JET RAPID"></div>
+        <div class="indicator-dot" data-section="compare" data-tooltip="제품비교"></div>
+        <div class="indicator-dot" data-section="consumables" data-tooltip="부자재"></div>
+        <div class="indicator-dot" data-section="contact" data-tooltip="문의"></div>
+    </div>
+    
+    <!-- Home Section -->
+    <section id="home">
+        <div class="container">
+            <div class="home-content" data-aos="fade-up">
+                <h1>산업용 마킹의 새로운 기준</h1>
+                <p>독일 LEIBINGER CIJ 프린터의 공식 파트너<br>동화시스템과 함께 생산성을 혁신하세요</p>
+                <a href="#about" class="btn-primary">더 알아보기</a>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 data-aos="fade-up">동화시스템 소개</h2>
+            <div class="about-grid">
+                <div class="about-content" data-aos="fade-right">
+                    <h3>독일 프리미엄 CIJ 프린터 LEIBINGER</h3>
+                    <p>동화시스템은 독일 LEIBINGER 프리미엄라인을 취급하며, 첨단 산업용 마킹 솔루션을 국내 제조업체에 공급하고 있습니다.</p>
+                    <p>LEIBINGER는 독일에서 개발 및 생산되는 세계 최고 수준의 연속식 잉크젯 프린터(CIJ) 제조사로, 특허받은 Sealtronic 자동 노즐 실링 기술로 업계를 선도하고 있습니다.</p>
+                    <ul>
+                        <li>독일 품질의 신뢰성과 내구성</li>
+                        <li>타 방식 대비 99% 유지보수 비용 절감</li>
+                        <li>신속한 기술 지원 및 A/S</li>
+                        <li>신뢰도높은 정품 부품 사용</li>
+                        <li>전문 엔지니어 현장 지원</li>
+                    </ul>
+                </div>
+                <div class="about-image" data-aos="fade-left">
+                    <h3 style="color: var(--primary-color); margin-bottom: 30px;">Sealtronic 기술</h3>
+                    <p>세계 유일의 자동 노즐 실링 시스템으로 잉크라인의 건조를 완벽 차단합니다. 장시간 정지 후에도 청소 없이 즉시 가동 가능하며, 막힘이나 다운타임 발생률을 현저히 낮췄습니다.</p>
+                    <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 10px;">
+                        <h4 style="color: var(--secondary-color); margin-bottom: 15px;">핵심 이점</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">✓ 일일 청소 불필요</li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">✓ 즉시 시작 가능</li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">✓ 노즐 막힘 제로</li>
+                            <li style="padding: 10px 0;">✓ 최대 가동률 보장</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid" data-aos="fade-up">
+                <div class="stat-box">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">글로벌 라이빙거 파트너 국가</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">타 방식 대비 유지보수 비용 절감</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">신속한</div>
+                    <div class="stat-label">기술 지원</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JET3 UP Section -->
+    <section id="jet3up" class="product-section">
+        <div class="container">
+            <div class="product-hero">
+                <div data-aos="fade-right">
+                    <span class="product-badge">고급형 Universal Line</span>
+                    <h2>JET3 UP</h2>
+                    <h3>복잡한 작업을 위한 최고급 솔루션</h3>
+                    <p>가장 다양한 기능과 옵션을 제공하는 LEIBINGER의 최상위 모델입니다. 최대 5라인 인쇄와 800개 이상의 기능으로 가장 복잡하고 까다로운 마킹 작업도 완벽하게 처리합니다.</p>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">인쇄 라인</span><span class="spec-value">최대 5라인</span></li>
+                        <li><span class="spec-label">인쇄 속도</span><span class="spec-value">403 m/min (10 m/s)</span></li>
+                        <li><span class="spec-label">노즐 크기</span><span class="spec-value">35, 40, 50, 60, 70 µm</span></li>
+                        <li><span class="spec-label">디스플레이</span><span class="spec-value">10.4" 컬러 터치스크린</span></li>
+                        <li><span class="spec-label">IP 등급</span><span class="spec-value">IP54 (PRO: IP65)</span></li>
+                    </ul>
+                </div>
+                <div class="product-image" data-aos="fade-left" id="pr-img-3up">
+                    <div class="pr-img-text">
+                        <h1 style="color: var(--primary-color); font-size: 72px; margin: 0;">JET3 UP</h1>
+                        <p style="color: var(--text-light); margin-top: 20px;">Universal Line Printer</p>
+                        <div style="margin-top: 20px; padding: 15px; background: #003087; color: white; border-radius: 5px; font-weight: 600;">올라운더</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">🎯</div>
+                    <h3>다양한 노즐 옵션</h3>
+                    <p>35µm부터 70µm까지 5가지 노즐 크기 선택 가능. 초미세 인쇄부터 대형 마킹까지 모든 요구사항 충족</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">⚡</div>
+                    <h3>최대 5라인 인쇄</h3>
+                    <p>한 번에 최대 5라인까지 인쇄 가능. 복잡한 정보도 빠르고 정확하게 마킹</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>800개 이상 기능</h3>
+                    <p>업계 최다 기능으로 어떤 특수한 요구사항도 완벽하게 처리</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">💧</div>
+                    <h3>특수 버전 제공</h3>
+                    <p>MI(미세인쇄), PI(고대비), PRO(방수방진), EP(계란전용) 등 다양한 특수 버전</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">📊</div>
+                    <h3>2D 코드 인쇄</h3>
+                    <p>Data Matrix, QR Code, GS1 등 모든 2D 코드 완벽 지원</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">🔧</div>
+                    <h3>최고의 유연성</h3>
+                    <p>모든 산업 환경에 최적화된 솔루션 제공</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JET2 NEO Section -->
+    <section id="jet2neo" class="product-section">
+        <div class="container">
+            <div class="product-hero">
+                <div data-aos="fade-right">
+                    <span class="product-badge">중급형 Basic Line - 베스트셀러</span>
+                    <h2>JET2 NEO</h2>
+                    <h3>일상 작업을 위한 최적의 선택</h3>
+                    <p>가격 대비 성능이 뛰어난 중급형 모델로, 전 세계에서 가장 많이 선택받는 CIJ 프린터입니다. 표준 마킹 작업에 완벽한 성능을 제공하며, 직관적인 조작으로 누구나 쉽게 사용할 수 있습니다.</p>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">인쇄 라인</span><span class="spec-value">최대 3라인</span></li>
+                        <li><span class="spec-label">인쇄 속도</span><span class="spec-value">268 m/min</span></li>
+                        <li><span class="spec-label">노즐 크기</span><span class="spec-value">70 µm (60 µm 옵션)</span></li>
+                        <li><span class="spec-label">디스플레이</span><span class="spec-value">5.7" 컬러 TFT 터치스크린</span></li>
+                        <li><span class="spec-label">IP 등급</span><span class="spec-value">IP54</span></li>
+                    </ul>
+                </div>
+                <div class="product-image" data-aos="fade-left" id="pr-img-2neo">
+                    <div class="pr-img-text">
+                        <h1 style="color: var(--secondary-color); font-size: 72px; margin: 0;">JET2 NEO</h1>
+                        <p style="color: var(--text-light); margin-top: 20px;">Basic Line Printer</p>
+                        <div style="margin-top: 20px; padding: 15px; background: var(--accent-color); color: white; border-radius: 5px; font-weight: 600;">베스트셀러</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">💰</div>
+                    <h3>가성비 최고</h3>
+                    <p>합리적인 가격에 뛰어난 성능 제공. 중소기업에 최적</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">👍</div>
+                    <h3>직관적 조작</h3>
+                    <p>5.7인치 터치스크린으로 누구나 쉽게 사용 가능</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">🌍</div>
+                    <h3>글로벌 베스트셀러</h3>
+                    <p>전 세계에서 가장 많이 사용되는 신뢰성 검증 모델</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">🔋</div>
+                    <h3>저전력 소비</h3>
+                    <p>약 30W의 낮은 전력 소비로 운영 비용 절감</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">📦</div>
+                    <h3>범용성</h3>
+                    <p>식품, 음료, 제약, 포장 등 모든 산업에 적용 가능</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">✅</div>
+                    <h3>안정적 성능</h3>
+                    <p>독일 품질로 장기간 안정적인 운영 보장</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JET2 NEO S Section -->
+    <section id="jet2neos" class="product-section">
+        <div class="container">
+            <div class="product-hero">
+                <div data-aos="fade-right">
+                    <span class="product-badge">중급형 고속 특화</span>
+                    <h2>JET2 NEO S</h2>
+                    <h3>정밀하고 빠른 마킹의 전문가</h3>
+                    <p>JET2 NEO보다 30% 빠른 인쇄 속도와 더욱 정밀한 타이포그래피를 제공합니다. 60µm 고정 노즐로 소형 제품 마킹에 최적화되어 있으며, 잉크와 솔벤트 소비를 50% 절감합니다.</p>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">인쇄 라인</span><span class="spec-value">최대 3라인</span></li>
+                        <li><span class="spec-label">인쇄 속도</span><span class="spec-value">403 m/min (6 m/s)</span></li>
+                        <li><span class="spec-label">문자 속도</span><span class="spec-value">2,333자/초 (30% ↑)</span></li>
+                        <li><span class="spec-label">노즐 크기</span><span class="spec-value">60 µm (고정)</span></li>
+                        <li><span class="spec-label">솔벤트 절감</span><span class="spec-value">50% 절감</span></li>
+                    </ul>
+                </div>
+                <div class="product-image" data-aos="fade-left" id="pr-img-2neos">
+                    <div class="pr-img-text">
+                        <h1 style="color: #28a745; font-size: 72px; margin: 0;">JET2 NEO S</h1>
+                        <p style="color: var(--text-light); margin-top: 20px;">High Speed Specialist</p>
+                        <div style="margin-top: 20px; padding: 15px; background: #28a745; color: white; border-radius: 5px; font-weight: 600;">30% 더 빠름</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">⚡</div>
+                    <h3>30% 더 빠른 속도</h3>
+                    <p>2,333자/초의 고속 인쇄로 생산성 극대화</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">🎯</div>
+                    <h3>정밀 타이포그래피</h3>
+                    <p>60µm 노즐로 더욱 미세하고 선명한 인쇄 품질</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">💧</div>
+                    <h3>솔벤트 50% 절감</h3>
+                    <p>더 작은 잉크 방울로 소모품 비용 대폭 절감</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">📏</div>
+                    <h3>소형 제품 특화</h3>
+                    <p>케이블, 압출 부품, 소형 전자부품 마킹에 최적</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">🌱</div>
+                    <h3>친환경 운영</h3>
+                    <p>낮은 소모품 사용으로 환경 부담 최소화</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">🔄</div>
+                    <h3>고속 생산 라인</h3>
+                    <p>403 m/min 속도로 빠른 생산 라인 대응</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JET RAPID Section -->
+    <section id="jetrapid" class="product-section">
+        <div class="container">
+            <div class="product-hero">
+                <div data-aos="fade-right">
+                    <span class="product-badge">초고속형 High Speed Line - 베스트셀러</span>
+                    <h2>JET RAPID</h2>
+                    <h3>업계 최고 속도의 마킹 시스템</h3>
+                    <p>최대 1,000 m/min의 초고속 인쇄로 업계를 선도하는 특수 모델입니다. 케이블, 와이어, 파이프 등 초고속 생산 라인에 최적화되어 있으며, 생산성을 30-40% 향상시킵니다.</p>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">인쇄 라인</span><span class="spec-value">1라인 (Speed Plus: 5라인)</span></li>
+                        <li><span class="spec-label">최대 속도</span><span class="spec-value">800-1,000 m/min</span></li>
+                        <li><span class="spec-label">노즐 크기</span><span class="spec-value">55 µm (초고속 최적화)</span></li>
+                        <li><span class="spec-label">디스플레이</span><span class="spec-value">10.4" 컬러 터치스크린</span></li>
+                        <li><span class="spec-label">소비 전력</span><span class="spec-value">평균 20W (최저)</span></li>
+                    </ul>
+                </div>
+                <div class="product-image" data-aos="fade-left" id="pr-img-rapid">
+                    <div class="pr-img-text">
+                        <h1 style="color: var(--accent-color); font-size: 72px; margin: 0;">JET RAPID</h1>
+                        <p style="color: var(--text-light); margin-top: 20px;">High Speed Line Printer</p>
+                        <div style="margin-top: 20px; padding: 15px; background: var(--accent-color); color: white; border-radius: 5px; font-weight: 600;">1,000 m/min</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">🚀</div>
+                    <h3>업계 최고 속도</h3>
+                    <p>1,000 m/min의 초고속 인쇄로 생산성 극대화</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">📈</div>
+                    <h3>생산성 40% 향상</h3>
+                    <p>기존 대비 30-40% 생산량 증가 효과</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">🔌</div>
+                    <h3>최저 전력 소비</h3>
+                    <p>평균 20W로 가장 낮은 전력 소비 (A+++ 등급)</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">🎯</div>
+                    <h3>케이블 전문</h3>
+                    <p>WIRE 모델로 케이블/와이어 생산 라인 특화</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">🏭</div>
+                    <h3>대량 생산 최적</h3>
+                    <p>24/7 고속 대량 생산 환경에 완벽 대응</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">💎</div>
+                    <h3>프리미엄 품질</h3>
+                    <p>초고속에서도 완벽한 인쇄 품질 유지</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Compare Section -->
+    <section id="compare">
+        <div class="container">
+            <h2 data-aos="fade-up">제품 상세 비교</h2>
+            <p data-aos="fade-up" style="max-width: 800px; margin: 0 auto 40px;">네 가지 모델의 주요 사양을 한눈에 비교하여 귀사의 생산 환경에 최적인 솔루션을 찾으세요.</p>
+            
+            <div class="compare-table-wrapper" data-aos="fade-up">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>항목</th>
+                            <th>JET3 UP</th>
+                            <th>JET2 NEO</th>
+                            <th>JET2 NEO S</th>
+                            <th>JET RAPID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>제품 등급</strong></td>
+                            <td>고급형 Universal</td>
+                            <td>중급형 Basic</td>
+                            <td>중급형 고속</td>
+                            <td>초고속형 High Speed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>인쇄 라인 수</strong></td>
+                            <td>최대 5라인</td>
+                            <td>최대 3라인</td>
+                            <td>최대 3라인</td>
+                            <td>1라인 (Speed Plus: 5라인)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>노즐 크기</strong></td>
+                            <td>35, 40, 50, 60, 70 µm</td>
+                            <td>70 µm (60 µm 옵션)</td>
+                            <td>60 µm (고정)</td>
+                            <td>55 µm</td>
+                        </tr>
+                        <tr>
+                            <td><strong>최대 인쇄 속도</strong></td>
+                            <td>403 m/min (10 m/s)</td>
+                            <td>268 m/min</td>
+                            <td>403 m/min (6 m/s)</td>
+                            <td>800-1,000 m/min</td>
+                        </tr>
+                        <tr>
+                            <td><strong>문자 인쇄 속도</strong></td>
+                            <td>1,777자/초</td>
+                            <td>1,777자/초</td>
+                            <td>2,333자/초 (30% ↑)</td>
+                            <td>초고속</td>
+                        </tr>
+                        <tr>
+                            <td><strong>인쇄 높이</strong></td>
+                            <td>1.0 ~ 24 mm<br>(MI: 0.7mm부터)</td>
+                            <td>1.0 ~ 24 mm</td>
+                            <td>1.2 ~ 12 mm</td>
+                            <td>1.0 ~ 24 mm</td>
+                        </tr>
+                        <tr>
+                            <td><strong>디스플레이</strong></td>
+                            <td>10.4" 터치스크린</td>
+                            <td>5.7" 터치스크린</td>
+                            <td>5.7" 터치스크린</td>
+                            <td>10.4" 터치스크린</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sealtronic 기술</strong></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td><strong>소비 전력</strong></td>
+                            <td>약 30W (A+++)</td>
+                            <td>약 30W</td>
+                            <td>약 30W</td>
+                            <td>평균 20W (A+++)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>바코드 인쇄</strong></td>
+                            <td>✓ 모든 1D 바코드</td>
+                            <td>✓ 모든 1D 바코드</td>
+                            <td>✓ 모든 1D 바코드</td>
+                            <td>✓ 1D 바코드</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2D 코드 인쇄</strong></td>
+                            <td>✓ Data Matrix, QR, GS1</td>
+                            <td>✓ Data Matrix, QR</td>
+                            <td>✓ Data Matrix, QR</td>
+                            <td>✓ Data Matrix (단순 코드)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IP 등급</strong></td>
+                            <td>IP54 (PRO: IP65)</td>
+                            <td>IP54</td>
+                            <td>IP54 (D: 방진강화)</td>
+                            <td>IP54</td>
+                        </tr>
+                        <tr>
+                            <td><strong>주요 특징</strong></td>
+                            <td>최대 유연성<br>800개 이상 기능<br>7종 특수 버전</td>
+                            <td>가성비 최고<br>글로벌 베스트셀러<br>직관적 조작</td>
+                            <td>30% 빠른 속도<br>솔벤트 50% 절감<br>정밀 타이포그래피</td>
+                            <td>업계 최고 속도<br>생산성 40% 향상<br>최저 전력</td>
+                        </tr>
+                        <tr>
+                            <td><strong>적합 산업</strong></td>
+                            <td>모든 복잡한 응용<br>의료기기, 전자부품</td>
+                            <td>식품, 음료, 제약<br>포장, 일반 제조</td>
+                            <td>케이블, 압출<br>소형 전자부품</td>
+                            <td>초고속 포장<br>케이블/와이어<br>대량 생산</td>
+                        </tr>
+                        <tr>
+                            <td><strong>특수 버전</strong></td>
+                            <td>MI, PI, PRO, EP 등</td>
+                            <td>D (방진), EP (계란)</td>
+                            <td>표준형</td>
+                            <td>WIRE, WIRE PI, Speed Plus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>가격대</strong></td>
+                            <td>고가</td>
+                            <td>중가</td>
+                            <td>중가</td>
+                            <td>최고가</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="margin-top: 60px; padding: 40px; background: var(--bg-light); border-radius: 10px; border-left: 5px solid var(--secondary-color);" data-aos="fade-up">
+                <h3 style="color: var(--primary-color); margin-bottom: 20px;">모델 선택 가이드</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 20px;">
+                    <div>
+                        <h4 style="color: var(--secondary-color); margin-bottom: 10px;">JET3 UP 추천</h4>
+                        <p style="font-size: 16px;">복잡한 작업, 다양한 노즐 필요, 5라인 인쇄, 최고 수준의 유연성과 기능이 필요한 경우</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--secondary-color); margin-bottom: 10px;">JET2 NEO 추천</h4>
+                        <p style="font-size: 16px;">표준 작업, 가격 대비 성능 중시, 범용성 높은 인쇄, 안정적이고 검증된 모델 선호</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--secondary-color); margin-bottom: 10px;">JET2 NEO S 추천</h4>
+                        <p style="font-size: 16px;">더 빠른 속도 필요, 미세한 인쇄, 소형 제품 마킹, 잉크/솔벤트 비용 절감 희망</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--secondary-color); margin-bottom: 10px;">JET RAPID 추천</h4>
+                        <p style="font-size: 16px;">초고속 생산 라인(800m/min 이상), 케이블/와이어, 최대 생산성 최우선, 대량 생산</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Consumables Section -->
+    <section id="consumables">
+        <div class="container">
+            <h2 data-aos="fade-up">부자재 및 소모품</h2>
+            <p data-aos="fade-up" style="max-width: 800px; margin: 0 auto 40px;">LEIBINGER 정품 잉크, 솔벤트 및 액세서리로 최고의 인쇄 품질과 프린터 수명을 보장합니다.</p>
+            
+            <div class="consumables-grid">
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="consumable-icon">🖋️</div>
+                    <div class="consumable-title">MEK 베이스 잉크</div>
+                    <div class="consumable-desc">빠른 건조, 높은 대비, 비다공성 재질용</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="consumable-icon">💧</div>
+                    <div class="consumable-title">에탄올 베이스 잉크</div>
+                    <div class="consumable-desc">다공성 및 비다공성 표면 모두 사용 가능</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="consumable-icon">⚡</div>
+                    <div class="consumable-title">아세톤 베이스 잉크</div>
+                    <div class="consumable-desc">초고속 건조, 고속 생산 라인용</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="consumable-icon">🎨</div>
+                    <div class="consumable-title">안료 잉크 (PI)</div>
+                    <div class="consumable-desc">어두운 표면에 고대비 인쇄</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="consumable-icon">🍎</div>
+                    <div class="consumable-title">식품용 잉크</div>
+                    <div class="consumable-desc">FDA 및 EU 식품안전 규정 준수</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="consumable-icon">💜</div>
+                    <div class="consumable-title">UV 가시 잉크</div>
+                    <div class="consumable-desc">UV 라이트에서만 보이는 보안 마킹용</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="consumable-icon">🌈</div>
+                    <div class="consumable-title">컬러 잉크</div>
+                    <div class="consumable-desc">다양한 색상 선택 가능</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="consumable-icon">🔥</div>
+                    <div class="consumable-title">내열 잉크</div>
+                    <div class="consumable-desc">고온 환경에서도 안정적</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="consumable-icon">❄️</div>
+                    <div class="consumable-title">결로 투과 잉크</div>
+                    <div class="consumable-desc">냉각 환경, 습기에 강함</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="consumable-icon">🧪</div>
+                    <div class="consumable-title">UV 경화 잉크</div>
+                    <div class="consumable-desc">화학물질 및 용매에 강한 저항성</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="consumable-icon">🥚</div>
+                    <div class="consumable-title">계란 전용 잉크</div>
+                    <div class="consumable-desc">계란 껍질 인쇄 특화</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="consumable-icon">🔒</div>
+                    <div class="consumable-title">보안 잉크</div>
+                    <div class="consumable-desc">위변조 방지 특수 잉크</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="consumable-icon">✈️</div>
+                    <div class="consumable-title">항공용 잉크</div>
+                    <div class="consumable-desc">주요 항공기 제조사 승인</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="consumable-icon">♻️</div>
+                    <div class="consumable-title">제거 가능 잉크</div>
+                    <div class="consumable-desc">재활용 시 완전 제거 가능</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="consumable-icon">🔬</div>
+                    <div class="consumable-title">맞춤형 잉크</div>
+                    <div class="consumable-desc">특수 요구사항 맞춤 제작</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="consumable-icon">💧</div>
+                    <div class="consumable-title">솔벤트</div>
+                    <div class="consumable-desc">각 잉크 타입별 최적화 솔벤트</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="consumable-icon">🧹</div>
+                    <div class="consumable-title">클리닝 키트</div>
+                    <div class="consumable-desc">정기 점검용 청소 도구</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="consumable-icon">🔧</div>
+                    <div class="consumable-title">교체 노즐</div>
+                    <div class="consumable-desc">35µm ~ 70µm 다양한 사이즈</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="consumable-icon">🔌</div>
+                    <div class="consumable-title">케이블 & 커넥터</div>
+                    <div class="consumable-desc">전원 및 통신 케이블</div>
+                </div>
+                
+                <div class="consumable-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="consumable-icon">📦</div>
+                    <div class="consumable-title">필터 & 소모품</div>
+                    <div class="consumable-desc">정기 교체 필터 및 부품</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 60px; text-align: center;" data-aos="fade-up">
+                <p style="font-size: 20px; color: var(--text-dark); margin-bottom: 20px;">정품 소모품 사용으로 최상의 성능을 보장받으세요</p>
+                <a href="#contact" class="btn-primary">견적 문의하기</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 data-aos="fade-up">문의하기</h2>
+            <p data-aos="fade-up" style="color: rgba(255,255,255,0.9); max-width: 800px; margin: 0 auto 60px;">궁금하신 사항이나 견적 문의는 언제든지 연락주세요. 전문 엔지니어가 신속하게 답변드리겠습니다.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h3>주소</h3>
+                            <p>대구 북구 성북로5길 65<br>1층 전시장, 2층 사무실</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h3>전화</h3>
+                            <p>+82-53-325-8451<br>평일 09:00 - 18:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h3>이메일</h3>
+                            <p>sg0904dh@hanmail.net<br>24시간 접수 가능</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-details">
+                            <h3>웹사이트</h3>
+                            <p>www.donghwasystem.com<br>온라인 카탈로그 다운로드</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form" data-aos="fade-left">
+                    <form>
+                        <div class="form-group">
+                            <label>회사명 *</label>
+                            <input type="text" required placeholder="회사명을 입력하세요">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>담당자명 *</label>
+                            <input type="text" required placeholder="성함을 입력하세요">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>연락처 *</label>
+                            <input type="tel" required placeholder="010-0000-0000">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>이메일 *</label>
+                            <input type="email" required placeholder="email@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>관심 제품</label>
+                            <input type="text" placeholder="예: JET3 UP, JET2 NEO">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>문의 내용 *</label>
+                            <textarea required placeholder="문의하실 내용을 자세히 작성해주세요"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary" style="width: 100%;">문의 보내기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 동화시스템. All Rights Reserved. | LEIBINGER 공식 파트너</p>
+            <p style="margin-top: 10px;">독일 프리미엄 CIJ 프린터의 한국 공식 공급업체</p>
+        </div>
+    </footer>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+        
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.querySelector('.contact-form form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('문의가 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.');
+            contactForm.reset();
+        });
+        
+        // Active section highlighting
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-menu a');
+        const indicatorDots = document.querySelectorAll('.indicator-dot');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            // Update nav menu
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Update page indicator
+            indicatorDots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('data-section') === current) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+        
+        // Page indicator click handler
+        indicatorDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const section = dot.getAttribute('data-section');
+                const target = document.getElementById(section);
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
