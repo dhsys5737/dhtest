@@ -989,6 +989,30 @@
         <div class="indicator-dot" data-section="consumables" data-tooltip="부자재"></div>
         <div class="indicator-dot" data-section="contact" data-tooltip="문의"></div>
     </div>
+
+    <!--popup codes-->
+        <div class="popup-overlay" id="myPopup">
+            <div class="popup-container">
+                <div class="popup-header">
+                    <h3 class="popup-title">팝업 제목</h3>
+                    <button class="popup-close-x" onclick="closePopup('myPopup')">×</button>
+                </div>
+                
+                <div class="popup-body">
+                    팝업내용은 여기에 들어갑니당
+                </div>
+                
+                <div class="popup-footer">
+                    <div class="popup-no-show">
+                        <input type="checkbox" id="noShow-myPopup">
+                        <label for="noShow-myPopup">다시 보지 않기</label>
+                    </div>
+                    <button class="popup-close-btn" onclick="closePopup('myPopup')">닫기</button>
+                </div>
+            </div>
+        </div>
+
+
     
     <!-- Home Section -->
     <section id="home">
@@ -1678,27 +1702,7 @@
         </div>
     </footer>
 
-    /*popup*/
-        <div class="popup-overlay" id="myPopup">
-            <div class="popup-container">
-                <div class="popup-header">
-                    <h3 class="popup-title">팝업 제목</h3>
-                    <button class="popup-close-x" onclick="closePopup('myPopup')">×</button>
-                </div>
-                
-                <div class="popup-body">
-                    팝업내용은 여기에 들어갑니당
-                </div>
-                
-                <div class="popup-footer">
-                    <div class="popup-no-show">
-                        <input type="checkbox" id="noShow-myPopup">
-                        <label for="noShow-myPopup">다시 보지 않기</label>
-                    </div>
-                    <button class="popup-close-btn" onclick="closePopup('myPopup')">닫기</button>
-                </div>
-            </div>
-        </div>
+
 
 
 
