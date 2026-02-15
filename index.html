@@ -656,6 +656,152 @@
         footer p {
             color: rgba(255,255,255,0.6);
         }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .popup-overlay.active {
+            display: flex;
+        }
+        
+        /* 팝업 컨테이너 */
+        .popup-container {
+            width: 440px;
+            height: 500px;
+            background: white;
+            border-radius: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: popupFadeIn 0.3s ease;
+        }
+        
+        @keyframes popupFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* 팝업 헤더 */
+        .popup-header {
+            background: #f8f8f8;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 40px;
+        }
+        
+        .popup-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .popup-close-x {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        
+        .popup-close-x:hover {
+            color: #333;
+        }
+        
+        /* 팝업 본문 */
+        .popup-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: white;
+        }
+        
+        /* 팝업 푸터 */
+        .popup-footer {
+            background: #f8f8f8;
+            border-top: 1px solid #e0e0e0;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 50px;
+        }
+        
+        /* 다시 보지 않기 체크박스 */
+        .popup-no-show {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .popup-no-show input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            margin: 0;
+        }
+        
+        .popup-no-show label {
+            cursor: pointer;
+            margin: 0;
+        }
+        
+        /* 닫기 버튼 */
+        .popup-close-btn {
+            background: #555;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+        
+        .popup-close-btn:hover {
+            background: #333;
+        }
+        
+        /* 모바일에서 팝업 숨김 */
+        @media (max-width: 768px) {
+            .popup-overlay {
+                display: none !important;
+            }
+        }
+
+
+
         
         /* Mobile Responsive */
         @media (max-width: 768px) {
@@ -1554,6 +1700,10 @@
             </div>
         </div>
     </footer>
+
+
+
+
     
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
