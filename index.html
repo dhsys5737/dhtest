@@ -1830,6 +1830,10 @@
         }
         document.getElementById(id).classList.remove('active');
     }
+
+        window.addEventListener('load', function() {
+            setTimeout(() => openPopup('myPopup'), 500);
+        });
     </script>
 </body>
 </html>
