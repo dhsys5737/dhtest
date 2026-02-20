@@ -983,58 +983,47 @@
     /*사이드바 추가 코드*/
     /* 좌측 플로트 섹션 */
     #floatSection {
-      float: left;
-      width: 240px;
-      background-color: white;
-      border-right: 2px solid red;
-      padding: 20px;
-      box-sizing: border-box;
+        position: fixed;
+        float: left;
+        width: 240px;
+        background-color: white;
+        border-right: 2px solid red;
+        padding: 20px;
+        box-sizing: border-box;
     }
 
     .floatItem {
-      background-color: #f7f7f7;
-      border: 1px solid red;
-      margin-bottom: 15px;
-      padding: 15px;
-      text-align: center;
+        background-color: #f7f7f7;
+        border: 1px solid red;
+        margin-bottom: 15px;
+        padding: 15px;
+        text-align: center;
     }
 
     .floatItem h3 {
-      color: red;
-      margin: 0 0 10px;
-    }
-
-    /* 본문 영역 */
-    #mainContent {
-      margin-left: 260px;
-      padding: 20px;
+        color: red;
+        margin: 0 0 10px;
     }
 
     /* 모바일 환경 */
     @media (max-width: 768px) {
-      #floatSection {
-        float: none;
-        width: 100%;
-        border-right: none;
-        border-top: 2px solid red;
-        display: flex;
-        flex-direction: column;
-        position: fixed; /* 항상 같은 자리에 고정 */
-        bottom: 0;
-        left: 0;
-        background-color: white;
-      }
-
-      .floatItem {
-        margin: 5px 0;
-      }
-
-      #mainContent {
-        margin-left: 0;
-        padding-bottom: 200px; /* 하단 고정된 섹션 공간 확보 */
-      }
+        #floatSection {
+            float: none;
+            width: 100%;
+            border-right: none;
+            border-top: 2px solid red;
+            display: flex;
+            flex-direction: column;
+            position: fixed; /* 항상 같은 자리에 고정 */
+            bottom: 0;
+            left: 0;
+            background-color: white;
+        }
+    
+        .floatItem {
+            margin: 5px 0;
+        }
     }
-
         
     </style>
 </head>
