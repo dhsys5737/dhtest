@@ -979,6 +979,63 @@
                 display: none;
             }
         }
+
+    /*사이드바 추가 코드*/
+    /* 좌측 플로트 섹션 */
+    #floatSection {
+      float: left;
+      width: 240px;
+      background-color: white;
+      border-right: 2px solid red;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .floatItem {
+      background-color: #f7f7f7;
+      border: 1px solid red;
+      margin-bottom: 15px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .floatItem h3 {
+      color: red;
+      margin: 0 0 10px;
+    }
+
+    /* 본문 영역 */
+    #mainContent {
+      margin-left: 260px;
+      padding: 20px;
+    }
+
+    /* 모바일 환경 */
+    @media (max-width: 768px) {
+      #floatSection {
+        float: none;
+        width: 100%;
+        border-right: none;
+        border-top: 2px solid red;
+        display: flex;
+        flex-direction: column;
+        position: fixed; /* 항상 같은 자리에 고정 */
+        bottom: 0;
+        left: 0;
+        background-color: white;
+      }
+
+      .floatItem {
+        margin: 5px 0;
+      }
+
+      #mainContent {
+        margin-left: 0;
+        padding-bottom: 200px; /* 하단 고정된 섹션 공간 확보 */
+      }
+    }
+
+        
     </style>
 </head>
 <body>
@@ -1017,6 +1074,28 @@
         <div class="indicator-dot" data-section="consumables" data-tooltip="부자재"></div>
         <div class="indicator-dot" data-section="contact" data-tooltip="문의"></div>
     </div>
+
+    
+    <!--left float code-->
+    <div id="floatSection">
+    <div class="floatItem">
+        <h3>컨텐츠 A</h3>
+        <p>내용 영역</p>
+    </div>
+    <div class="floatItem">
+    <h3>컨텐츠 B</h3>
+        <p>내용 영역</p>
+    </div>
+    <div class="floatItem">
+        <h3>컨텐츠 C</h3>
+        <p>내용 영역</p>
+    </div>
+  </div>
+
+  <div id="mainContent">
+      <h1>메인 콘텐츠 영역</h1>
+      <p>여기에 본문 내용을 작성하세요.</p>
+  </div>
 
     <!--popup codes-->
         <div class="popup-overlay" id="myPopup">
