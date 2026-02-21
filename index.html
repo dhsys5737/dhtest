@@ -187,9 +187,9 @@
         }
 
         .banner{
-            width:100%;
-            padding:0;
-            margin:20px 0;
+            position: relative;
+            z-index: 1;
+            padding: 0;
         }
         
         h1 {
@@ -986,9 +986,8 @@
         position: fixed;
         float: left;
         backdrop-filter:blur(10px);
-        width: 240px;
-        margin-top:20%;
-        background-color: white;
+        width: 156px;
+        margin-top: 13%;
         padding: 20px;
         border: solid 1px #f7f7f7;
         border-radius: 20px;
@@ -1016,7 +1015,7 @@
             border-right: none;
             border-top: 2px solid red;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             position: fixed; /* 항상 같은 자리에 고정 */
             bottom: 0;
             left: 0;
