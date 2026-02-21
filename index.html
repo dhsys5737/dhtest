@@ -986,6 +986,7 @@
         position: fixed;
         float: left;
         width: 240px;
+        margin-top:20%;
         background-color: white;
         padding: 20px;
         border-radius: 20px;
@@ -1066,7 +1067,7 @@
 
     
     <!--left float code-->
-    <div id="floatSection">
+    <div id="floatSection" data-aos="fade-up">
         <div class="floatItem">
             <h3>컨텐츠 A</h3>
             <p>내용 영역</p>
@@ -1818,7 +1819,7 @@
         // Initialize AOS
         AOS.init({
             duration: 300,
-            easing: 'ease-in-out',
+            easing: 'ease',
             once: true,
             offset: 100
         });
