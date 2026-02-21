@@ -985,10 +985,12 @@
     #floatSection {
         position: fixed;
         float: left;
+        backdrop-filter:blur(10px);
         width: 240px;
         margin-top:20%;
         background-color: white;
         padding: 20px;
+        border: solid 1px #f7f7f7;
         border-radius: 20px;
         box-sizing: border-box;
         z-index:9;
@@ -1067,7 +1069,7 @@
 
     
     <!--left float code-->
-    <div id="floatSection" data-aos="fade-up">
+    <div id="floatSection" data-aos="fade-up" data-aos-duration="500">
         <div class="floatItem">
             <h3>컨텐츠 A</h3>
             <p>내용 영역</p>
