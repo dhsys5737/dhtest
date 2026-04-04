@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JET2neo Error List</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a19; font-size: 14px; }
+
+  .container { max-width: 1380px; margin: 0 auto; padding: 2rem 1.5rem 6rem; }
+
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 13px; color: #888780; margin-bottom: 1.5rem; }
+
+  .top-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 1rem; }
+  .search-box {
+    flex: 1; padding: 9px 14px; font-size: 14px;
+    border: 0.5px solid #c8c6be; border-radius: 8px;
+    background: #fff; color: #1a1a19;
+    outline: none; transition: border-color 0.15s;
+  }
+  .search-box:focus { border-color: #888780; }
+
+  .btn-sm {
+    white-space: nowrap; padding: 8px 14px; font-size: 12px; font-weight: 500;
+    border-radius: 8px; border: 0.5px solid #c8c6be;
+    background: #fff; color: #5f5e5a; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-sm:hover { background: #f1efe8; }
+
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 0.75rem; }
+  .filter-btn {
+    font-size: 12px; padding: 4px 12px; border-radius: 8px;
+    border: 0.5px solid #c8c6be; background: #fff;
+    color: #5f5e5a; cursor: pointer; transition: all 0.15s;
+  }
+  .filter-btn:hover { background: #f1efe8; }
+  .filter-btn.active { background: #f1efe8; color: #1a1a19; border-color: #888780; font-weight: 500; }
+
+  .count { font-size: 12px; color: #888780; margin-bottom: 8px; }
+
+  /* checked-only mode banner */
+  .mode-banner {
+    display: none; align-items: center; justify-content: space-between;
+    background: #faeeda; border: 0.5px solid #ef9f27;
+    border-radius: 8px; padding: 8px 14px; margin-bottom: 10px; font-size: 13px; color: #633806;
+  }
+  .mode-banner.visible { display: flex; }
+  .btn-reset-view {
+    font-size: 12px; font-weight: 500; color: #633806; background: none;
+    border: 0.5px solid #ba7517; border-radius: 6px; padding: 4px 12px; cursor: pointer;
+  }
+  .btn-reset-view:hover { background: #fac775; }
+
+  .tbl-wrap { overflow-x: auto; border-radius: 10px; border: 0.5px solid #d3d1c7; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+
+  thead th {
+    text-align: left; padding: 10px 12px;
+    font-weight: 500; font-size: 12px; color: #5f5e5a;
+    border-bottom: 0.5px solid #d3d1c7;
+    background: #f1efe8; position: sticky; top: 0; z-index: 1;
+  }
+  th.col-chk, td.col-chk { width: 40px; text-align: center; padding: 10px 6px; }
+  th.col-idx, td.col-idx { width: 46px; text-align: center; color: #888780; font-size: 12px; }
+  th.col-code, td.col-code { width: 90px; }
+  th.col-name, td.col-name { width: 18%; }
+  th.col-cause, td.col-cause { width: 27%; }
+  th.col-action, td.col-action { width: 26%; }
+  th.col-note, td.col-note { width: 16%; }
+
+  tbody tr { border-bottom: 0.5px solid #ebebeb; transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #fafaf8; }
+  tbody tr.checked-row { background: #fffbf0; }
+  tbody tr.checked-row:hover { background: #fff7e0; }
+  tbody td { padding: 10px 12px; color: #1a1a19; vertical-align: top; line-height: 1.55; word-break: break-word; }
+
+  .cb { width: 15px; height: 15px; cursor: pointer; accent-color: #ba7517; }
+
+  .code { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; font-weight: 500; }
+
+  .badge { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 6px; white-space: nowrap; margin-top: 4px; }
+  .badge-comm { background: #e6f1fb; color: #0c447c; }
+  .badge-job  { background: #eaf3de; color: #27500a; }
+  .badge-mem  { background: #faeeda; color: #633806; }
+  .badge-hyd  { background: #e1f5ee; color: #085041; }
+  .badge-head { background: #faece7; color: #712b13; }
+  .badge-spd  { background: #fbeaf0; color: #72243e; }
+  .badge-sys  { background: #eeedfe; color: #3c3489; }
+  .badge-ink  { background: #f1efe8; color: #444441; }
+
+  .name { font-weight: 500; margin-bottom: 4px; }
+  .cause-text { color: #5f5e5a; }
+  .note-text  { color: #888780; font-size: 12px; }
+
+  /* floating button area */
+  .fab-wrap {
+    position: fixed; right: 2rem; bottom: 2rem; z-index: 100;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+  }
+  .fab-counter {
+    background: #ba7517; color: #fff; font-size: 12px; font-weight: 500;
+    padding: 4px 12px; border-radius: 20px;
+    opacity: 0; transform: translateY(4px); transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+  .fab-counter.visible { opacity: 1; transform: translateY(0); }
+  .fab-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 13px 24px; font-size: 14px; font-weight: 500;
+    border-radius: 50px; border: none; cursor: pointer;
+    background: #1a1a19; color: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  }
+  .fab-btn:hover { background: #2e2e2c; box-shadow: 0 6px 24px rgba(0,0,0,0.28); }
+  .fab-btn:active { transform: scale(0.97); }
+
+  @media (max-width: 768px) {
+    .container { padding: 1rem 1rem 5rem; }
+    th.col-note, td.col-note { display: none; }
+    .fab-wrap { right: 1rem; bottom: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>JET2neo Error List</h1>
+  <p class="subtitle">Service Manual Rev 2.5 — Section 6 (Page 30–47)</p>
+
+  <div class="top-bar">
+    <input class="search-box" type="text" id="search" placeholder="에러 코드 또는 키워드 검색...">
+    <button class="btn-sm" id="btnCheckAll">전체 선택</button>
+    <button class="btn-sm" id="btnUncheckAll">선택 해제</button>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-cat="all">전체</button>
+    <button class="filter-btn" data-cat="comm">통신 오류</button>
+    <button class="filter-btn" data-cat="job">작업/스크립트</button>
+    <button class="filter-btn" data-cat="mem">메모리</button>
+    <button class="filter-btn" data-cat="hyd">유압/점도</button>
+    <button class="filter-btn" data-cat="head">프린트헤드</button>
+    <button class="filter-btn" data-cat="spd">속도/인쇄</button>
+    <button class="filter-btn" data-cat="sys">시스템</button>
+    <button class="filter-btn" data-cat="ink">잉크/용제</button>
+  </div>
+
+  <div class="count" id="count"></div>
+
+  <div class="mode-banner" id="modeBanner">
+    <span>✔ 체크된 항목만 표시하고 있습니다.</span>
+    <button class="btn-reset-view" id="btnResetView">전체 보기로 돌아가기</button>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-chk">
+            <input type="checkbox" class="cb" id="masterCb" title="현재 보이는 항목 전체 선택/해제">
+          </th>
+          <th class="col-idx">#</th>
+          <th class="col-code">코드</th>
+          <th class="col-name">에러명</th>
+          <th class="col-cause">원인</th>
+          <th class="col-action">조치</th>
+          <th class="col-note">비고</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- floating button -->
+<div class="fab-wrap">
+  <div class="fab-counter" id="fabCounter">0개 선택됨</div>
+  <button class="fab-btn" id="fabBtn">
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.5 3.5h12M1.5 7.5h7.5M1.5 11.5h5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    오류 보기
+  </button>
+</div>
+
+<script>
+const errors = [
+  {code:"2",name:"Internal communication error",cat:"comm",cause:"A CPU(RIP) has sent a message to a different CPU which is unknown. Firmware/software version incompatibility.",action:"Carry out a software update.",note:"Contact LEIBINGER if update fails."},
+  {code:"3",name:"Internal comm error – Too much data",cat:"comm",cause:"Internal message at receiver was too large (>1MB).",action:"Carry out software update. Check file sizes (fonts, graphics, job) – max 1MB.",note:"Contact LEIBINGER if no success."},
+  {code:"4",name:"Internal communication error",cat:"comm",cause:"Single data packet doesn't fit in the length (transmission error).",action:"Read script and interface protocol documentation.",note:"Contact LEIBINGER if no success."},
+  {code:"5",name:"Internal communication error",cat:"comm",cause:"Block transfer error (transmission error).",action:"Reboot the system.",note:"Contact LEIBINGER if no success."},
+  {code:"6",name:"Internal comm error – Too much data",cat:"comm",cause:"Too large amount of data received.",action:"Reboot the system.",note:"Contact LEIBINGER if no success."},
+  {code:"7",name:"Internal communication error",cat:"comm",cause:"A CPU(RIP) sent a message to a different CPU which is unknown.",action:"Reboot system. Software update. Change controller board.",note:"See service doc 'Exchange the Controller board JET3'."},
+  {code:"20–24",name:"Internal interface error",cat:"comm",cause:"A CPU(RIP) sent a message to a different CPU which is unknown.",action:"Reboot system. Software update. Change controller board.",note:"See service doc 'Exchange the Controller board JET3'."},
+  {code:"100–104",name:"Internal communication error",cat:"comm",cause:"A CPU(RIP) sent a message to a different CPU which is unknown.",action:"Reboot system. Software update. Change controller board.",note:"See service doc 'Exchange the Controller board JET3'."},
+  {code:"105",name:"Internal comm error – Too much data",cat:"comm",cause:"Internal message at receiver was too large (>1MB).",action:"Check file sizes (fonts, graphics, job) – max 1MB.",note:""},
+  {code:"109/110",name:"Internal communication error",cat:"comm",cause:"A CPU(RIP) sent a message to a different CPU which is unknown.",action:"Reboot system. Software update. Change controller board.",note:"See service doc 'Exchange the Controller board JET3'."},
+  {code:"111",name:"Internal communication error",cat:"comm",cause:"CPU sent a message but got no response. Possible hardware failure: Cyclon Board defective, 5V PSU unstable, or brief network dropouts. Printer GUI resets system automatically.",action:"System resets automatically to try to recover.",note:""},
+  {code:"112",name:"Internal communication error",cat:"comm",cause:"Same as 111: CPU sent message but no response. Cyclon Board, 5V PSU, or network dropouts.",action:"System resets automatically.",note:""},
+  {code:"113",name:"Internal communication error",cat:"comm",cause:"A CPU(RIP) sent a message to a different CPU which is unknown.",action:"Reboot system. Software update. Change controller board.",note:"See service doc 'Exchange the Controller board JET3'."},
+  {code:"114",name:"Internal communication error",cat:"comm",cause:"The length of a single packet doesn't fit the length.",action:"Read script and interface protocol documentation.",note:"Contact LEIBINGER if no success."},
+  {code:"115–124",name:"Internal communication error",cat:"comm",cause:"A CPU(RIP) sent a message to a different CPU which is unknown.",action:"Reboot system. Software update. Change controller board.",note:"See service doc 'Exchange the Controller board JET3'."},
+  {code:"1000",name:"Joblist could not be loaded",cat:"job",cause:"RIP was unable to load the job list (faulty job list). Possibly manually-created job list.",action:"Check the job list and job parameters again.",note:""},
+  {code:"1001",name:"Script begin job syntax error",cat:"job",cause:"Syntax error in beginning of job script.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1002",name:"Jobparameter syntax error",cat:"job",cause:"Syntax error in job parameters.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1003",name:"Counter variable syntax error",cat:"job",cause:"Syntax error in counter variable.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1004",name:"Barcodeobject syntax error",cat:"job",cause:"Syntax error in the bar code object.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1005",name:"Textobject syntax error",cat:"job",cause:"Syntax error in the text object.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1006",name:"Replacement syntax error",cat:"job",cause:"Syntax error in substitution variable.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1007",name:"Timevariable syntax error",cat:"job",cause:"Syntax error in date/time variable.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1008",name:"Shiftvariable syntax error",cat:"job",cause:"Syntax error in shift code variable.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1009",name:"Extern text object syntax error",cat:"job",cause:"Syntax error in the external text object.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1010",name:"Too much objects",cat:"job",cause:"More than 32 objects in a job.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1011",name:"Font missing",cat:"job",cause:"Font could not be loaded. Mostly caused by copying a job without copying required fonts.",action:"Copy required font into internal memory and reload all fonts.",note:""},
+  {code:"1012",name:"Illegal character in barcodeobject",cat:"job",cause:"Not allowed characters in the bar code object.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1013",name:"Incorrect length of barcodeobject",cat:"job",cause:"Too many characters in the bar code object.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1014",name:"Mailing data too long",cat:"job",cause:"Mailing data too large. Mailing object in job with data too long or too many wildcards.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1015",name:"Mailing buffer full",cat:"job",cause:"Mailing buffer is full. Too many data have been sent.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1017",name:"Counter syntax error",cat:"job",cause:"Syntax error in the counter object.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1018",name:"Database index number invalid or missing",cat:"job",cause:"Database index number is not allowed or is missing.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1019",name:"Database index not consecutively numbered",cat:"job",cause:"Database index numbers are not sequential.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1021",name:"Extern Text: Double print happened",cat:"job",cause:"External text double print occurred. No new data sent.",action:"Check data handling of communication computer. Check data cable and connections.",note:""},
+  {code:"1200",name:"Memory error in SRAM",cat:"mem",cause:"SRAM memory on the Cyclon Board seems defective.",action:"Change the controller board.",note:"See service doc 'Exchange the Controller board JET3'."},
+  {code:"1201",name:"Checksum error – Check battery voltage",cat:"mem",cause:"Checksum error in battery-buffered SRAM. After initial operation, after battery replacement, battery empty, or incorrect memory content.",action:"Exchange the battery on the controller board.",note:""},
+  {code:"1202",name:"Memory access error in SRAM",cat:"mem",cause:"Software error.",action:"Carry out a software update.",note:"Contact LEIBINGER if update fails."},
+  {code:"1203",name:"Low battery voltage – Remove battery",cat:"mem",cause:"Battery voltage is under the limit.",action:"Exchange battery while mains plugged but switched off. Only trained staff.",note:""},
+  {code:"1210",name:"Printgo error",cat:"spd",cause:"Another print go signal detected while printing. Multiple print go from same product, or distance between sensor and head too large.",action:"Adjust print go sensor (one signal per product). Reduce sensor-to-head distance. Use print go hold function.",note:"See Operating Manual JET3 Fig. 8.5.1.4 / Page 196."},
+  {code:"1211",name:"Internal communication error",cat:"comm",cause:"Software issue.",action:"Carry out a software update.",note:""},
+  {code:"1212",name:"Internal communication error",cat:"comm",cause:"A CPU(RIP) sent a message to a different CPU which is unknown.",action:"Reboot system. Software update. Change controller board.",note:"See service doc 'Exchange the Controller board JET3'."},
+  {code:"1213",name:"Job data too large",cat:"job",cause:"A job is larger than 1 MB.",action:"Check the size of the print job and reduce if necessary.",note:"Read interface protocol documentation."},
+  {code:"1214",name:"Too many strokes in one job",cat:"job",cause:"More than 20,000 strokes used within the job.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1215",name:"Empty joblist",cat:"job",cause:"Empty job list.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1216",name:"Faulty RIP memory reservation",cat:"mem",cause:"Error in RIP memory reservation.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1217",name:"Extern text too large",cat:"job",cause:"External text too long for the text object, or unauthorized characters.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"1218",name:"X3 Output driver overloaded – Outputs disabled",cat:"sys",cause:"Output drivers for X3 outputs overloaded (overload/short-circuit). Outputs switched off automatically for protection.",action:"Rebooting reactivates outputs. Check for short circuit on X3 input.",note:""},
+  {code:"1219",name:"Power input overloaded – Check power supply",cat:"sys",cause:"Input voltage is too high.",action:"Check power supply for over voltage.",note:""},
+  {code:"1220",name:"Object counter reached end value – Print stopped",cat:"job",cause:"An object counter has reached its defined end.",action:"See Operating Manual JET3 Fig. 8.7.3 Counter / Page 218.",note:""},
+  {code:"1221",name:"Job list reached end – Print stopped",cat:"job",cause:"A job list (batch or job organizer) has reached the end and will not be repeated.",action:"See Operating Manual JET3.",note:""},
+  {code:"1222",name:"Job not loaded or faulty",cat:"job",cause:"Job was not loaded or is corrupt.",action:"Check job settings in job editor and save again. If imported by USB, check files are not corrupt.",note:""},
+  {code:"1223",name:"Last Database record printed – Print stopped",cat:"job",cause:"Last database entry printed. Database reached the end.",action:"Database has reached the end; printer stopped.",note:""},
+  {code:"1224",name:"Stop count value reached – Print stopped",cat:"job",cause:"End of counter reached. Printing has been stopped.",action:"",note:""},
+  {code:"1300",name:"Faulty visco-measurement – Check visco pump",cat:"hyd",cause:"Ball has not reached the upper sensor in viscometer. Sensor broken, ball hangs, or air in viscometer.",action:"Start constant bleed ~10 min. Remove and flush viscometer with solvent. Exchange viscometer if needed.",note:""},
+  {code:"1301",name:"Faulty visco-measurement – Ball does not fall",cat:"hyd",cause:"Ball does not fall (top stuck). Dirt in the glass tube.",action:"Remove and flush viscometer with solvent. Exchange if needed.",note:""},
+  {code:"1302",name:"Faulty visco-measurement – Ball not left sensor",cat:"hyd",cause:"Ball has not left the upper sensor. Dirt in glass tube.",action:"Remove and flush viscometer with solvent. Exchange if needed.",note:""},
+  {code:"1303",name:"Faulty visco-measurement – Max fall time exceeded",cat:"hyd",cause:"Maximum fall time of 16.4s exceeded. Ink extremely thick, lower sensor defective, or ball stuck.",action:"Remove and flush viscometer with solvent. Exchange if needed.",note:""},
+  {code:"1304",name:"Faulty visco-measurement – Min event time",cat:"hyd",cause:"Minimum event time of 500ms exceeded. Lower sensor defective (continuous signal) or air in tube.",action:"Remove and flush viscometer. Check sensor.",note:""},
+  {code:"1305",name:"Attention – Ink too thick",cat:"hyd",cause:"Fall time is 2 seconds higher than nominal (ink too thick). Issued once after power-on only.",action:"Adjust ink viscosity.",note:"Error issued once; not repeated after confirmation."},
+  {code:"1306",name:"Attention – Ink too thin",cat:"hyd",cause:"Fall time is less than 2 seconds below nominal (ink too thin).",action:"Adjust ink viscosity.",note:""},
+  {code:"1307",name:"Ink flow pressure faulty – Hydraulic stopped",cat:"hyd",cause:"Main pump couldn't push membrane to middle in 2.5s. Causes: air in system, leakage, bleed valve fault, pump defective, sensor wiring fail, Hall sensor defect, faulty diaphragm.",action:"Check pump and all connections.",note:"Entire hydraulic system shuts off for safety."},
+  {code:"1308",name:"Pressure fault – Hydraulic stopped",cat:"hyd",cause:"Compressor could not build pressure within 120 seconds. Pneumatic leakage, defective compressor/wiring, or clogged air filter.",action:"Check air pump and all connections.",note:""},
+  {code:"1309",name:"Ink Flow sensor error – Hydraulic stopped",cat:"hyd",cause:"Ink flow sensor reports out of ink. Jet not hitting gutter, no jet, nozzle blocked, cable break, or sensor flooded with ink.",action:"Adjust ink stream. Clean nozzle.",note:""},
+  {code:"1310",name:"Ink tank low level – Refill ink",cat:"ink",cause:"Ink tank is at low level.",action:"Please refill ink.",note:""},
+  {code:"1311",name:"Solvent tank low level – Refill solvent",cat:"ink",cause:"Solvent tank is at low level.",action:"Please refill solvent.",note:""},
+  {code:"1312",name:"Leakage found – Hydraulic stopped",cat:"hyd",cause:"Leakage sensor alarm. Hydraulic leakage or water on bottom.",action:"Check hydraulic for leakage. Clean sensor with solvent. Dry if humidity found and reactivate.",note:""},
+  {code:"1313",name:"Invalid Hydraulic Settings",cat:"hyd",cause:"Invalid hydraulic setting (pressure too high, visco correction factor out of range).",action:"Review and correct hydraulic settings.",note:""},
+  {code:"1315",name:"Ink type not supported",cat:"sys",cause:"Ink type not supported in printer.",action:"Carry out a software update.",note:"Contact LEIBINGER if update fails."},
+  {code:"5000",name:"Charge Electrode dirty",cat:"head",cause:"Electrode block dirty, head electronics filled with ink/solvent, HV discharge, or reassembly error.",action:"Clean print head.",note:""},
+  {code:"5001",name:"Phasing error – Charge electrode dirty",cat:"head",cause:"Electrode block dirty, head filled with ink/solvent, HV discharge, or reassembly error.",action:"Clean print head. Adjust ink stream. Exchange electrode block. Exchange umbilical.",note:""},
+  {code:"5002",name:"No charge electrode response",cat:"head",cause:"No detector response at drop break point. Wrong frequency, dirty electrode, defective oscillator/wiring, or electrode block defective.",action:"Exchange oscillator. Exchange electrode block.",note:""},
+  {code:"5003",name:"Drop break-off point not adjusted",cat:"head",cause:"Drops detected but break point couldn't be adjusted. See error 5002 causes.",action:"Exchange oscillator. Exchange electrode block.",note:""},
+  {code:"5004",name:"Phasing error – PrintGo interval too small",cat:"spd",cause:"Time interval between two PrintGos is too small.",action:"Increase delay or reduce production speed.",note:""},
+  {code:"5010–5014",name:"Error during Nozzle Open/Close",cat:"head",cause:"No encoder signals when driving motor. Motor jammed, encoder/wiring defective, faulty motor driver, or loose/ink-filled plug.",action:"Clean head with solvent. Change nozzle motor. Change controller board.",note:"See service doc 'Cleaning print head JET3' and 'Exchange controller board'."},
+  {code:"5015",name:"Motor direction incorrect",cat:"head",cause:"Encoder counting direction doesn't match desired movement direction.",action:"Change the nozzle motor. Check if connector is loose.",note:""},
+  {code:"5016",name:"Nozzle was open during Power On",cat:"head",cause:"Nozzle was open during power-on. Mains went off or plug removed while nozzle was open.",action:"Info message only; no immediate action required.",note:"Reminder that nozzle was left open."},
+  {code:"5020",name:"HV-Current too high",cat:"head",cause:"Dirty deflection plates, head filled with ink/solvent, or assembly error (squeezed HV cable).",action:"Clean the print head.",note:""},
+  {code:"5030",name:"StrokeGo occurred while stroke in progress – Strokes lost",cat:"spd",cause:"StrokeGo occurred while a stroke was in progress. Too high production speed.",action:"Reduce production speed. Increase stroke distance. Use different speed mode. Use smaller font.",note:""},
+  {code:"5031",name:"Printing speed too high – Drops will be lost",cat:"spd",cause:"Print is permanently too fast; StrokeGo monitoring disabled; DAC FIFO overflow.",action:"Reduce production speed. Increase stroke distance. Use different speed mode. Use smaller font.",note:""},
+  {code:"5042",name:"Drop calculation too slow",cat:"spd",cause:"Print speed permanently too fast.",action:"Reduce speed. Increase stroke distance. Use different speed mode. Use smaller font or increase distance between prints.",note:""},
+  {code:"5043",name:"Mailing buffer empty",cat:"spd",cause:"Double print go during print caused buffer to empty.",action:"Check print go sensor for double trigger. Adjust sensitivity. Use 'hold of distance' to ignore double trigger.",note:"See Operating Manual JET3 Fig. 8.5.1.4."},
+  {code:"5050",name:"Printgo distance shorter than print length",cat:"spd",cause:"Print distance in JobEditor shorter than the print itself.",action:"Increase PrintGo distance or reduce stroke distance.",note:""},
+  {code:"5051",name:"PrintGo during ongoing print – Prints lost",cat:"spd",cause:"Next PrintGo received while print in progress. Print out is longer than distance between two Print Gos.",action:"Adjust print go sensor. Reduce sensor-to-head distance. Use print go hold function.",note:""},
+  {code:"5060",name:"Charge voltage overload",cat:"head",cause:"Overload of charging voltage amplifier. Short circuit on charge line (possibly head), or coaxial cable flooded. Typical error: <1 MΩ.",action:"Clean head. Exchange umbilical. Adjust ink stream. Exchange electrode block. Check coaxial cable impedance.",note:"See service docs for print head cleaning, adjustment, electrode block exchange."},
+  {code:"5061",name:"Piezo voltage overload",cat:"head",cause:"Power in oscillating amplifier too high. Short-circuit in oscillator voltage power line or defective oscillator.",action:"Clean head. Adjust ink stream. Exchange oscillator. Exchange umbilical.",note:"See service docs."},
+  {code:"10006",name:"Font Error – Fonts incorrect",cat:"sys",cause:"A font in the FONT directory is empty, corrupted, or cannot be read from disk.",action:"Carry out a software update.",note:"Contact LEIBINGER if update fails."},
+  {code:"10007",name:"Jobfile Error",cat:"job",cause:"Desired job in JOB directory is empty, corrupted, or cannot be read from disk.",action:"Create a new job and load to print.",note:""},
+  {code:"10009",name:"Too many Fonts",cat:"sys",cause:"Too many fonts installed.",action:"Please remove one or more Fonts.",note:""},
+  {code:"10201",name:"Service required (working hours)",cat:"sys",cause:"Service required based on working hours.",action:"A service for the printer is due.",note:""},
+  {code:"10202",name:"Service required (time interval)",cat:"sys",cause:"Service required based on time interval.",action:"A service for the printer is due.",note:""},
+  {code:"11000",name:"Head cover opened during production",cat:"sys",cause:"Head cover opened during production.",action:"Before removing head cover, press print stop if printer is busy.",note:""},
+  {code:"11015",name:"RIP- or SDC-Software not found",cat:"sys",cause:"Software not found.",action:"Carry out software update.",note:"Contact LEIBINGER if update fails."},
+  {code:"11020",name:"Nozzle has not been closed",cat:"head",cause:"Print head mechanism stuck with ink, motor defective, or motor connector loose.",action:"Clean head with solvent. Check nozzle motor connector. Change nozzle motor.",note:"See service doc 'Cleaning print head JET3'."},
+  {code:"11025",name:"Nozzle could not be opened",cat:"head",cause:"Print head mechanism stuck with ink, motor defective, or motor connector loose.",action:"Clean head with solvent. Check nozzle motor connector. Change nozzle motor.",note:"See service doc 'Cleaning print head JET3'."},
+  {code:"11030",name:"No phasing",cat:"spd",cause:"Time distance between individual print outs is too short.",action:"Increase print go delay. Reduce production speed.",note:""},
+  {code:"11035",name:"Job could not be loaded",cat:"job",cause:"Job could not be loaded. Print job is physically damaged or does not exist.",action:"Check if print job file exists and is intact.",note:""},
+  {code:"11040",name:"Print start not possible",cat:"sys",cause:"Printer not ready, head cover open, or nozzle closed.",action:"Check head cover. If nozzle closed, push 'nozzle open'.",note:""},
+  {code:"11045",name:"Nozzle was open during Power On",cat:"head",cause:"Nozzle was open during power-on. Mains went off or plug removed while nozzle was open.",action:"Info message only.",note:"Reminder that nozzle was left open."},
+  {code:"11050",name:"Error in Database source – Print stopped",cat:"job",cause:"Errors in the database source. Printing has been stopped.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"12000",name:"Invalid packet received",cat:"comm",cause:"Wrong parameters sent via interface.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"12020",name:"Current job not found",cat:"job",cause:"Requested file not found.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"12025",name:"Requested file not found",cat:"job",cause:"Requested file not found.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"12045",name:"Receiving current job from script failed",cat:"job",cause:"Failure in script for the currently received job.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"12050",name:"Receiving current job error",cat:"job",cause:"Failure in script for the currently received job.",action:"Read script and interface protocol documentation.",note:""},
+  {code:"12100",name:"Nozzle could not be opened (service)",cat:"head",cause:"Print head mechanism stuck with ink, motor defective, or motor connector loose.",action:"Clean head with solvent. Check nozzle motor connector. Change nozzle motor.",note:"See service doc 'Cleaning print head JET3'."},
+  {code:"12105",name:"Nozzle could not be closed (service)",cat:"head",cause:"Print head mechanism stuck with ink, motor defective, or motor connector loose.",action:"Clean head with solvent. Check nozzle motor connector. Change nozzle motor.",note:"See service doc 'Cleaning print head JET3'."},
+  {code:"12107",name:"Activate new Ink – consumption exceeded",cat:"ink",cause:"Consumption measurement shows more ink used than activated.",action:"Activate with new bottle (TAG) and fill tank if necessary.",note:""},
+  {code:"12108",name:"Activate new Ink – machine will lock",cat:"ink",cause:"More ink used than activated. Machine will lock automatically.",action:"Activate with new bottle (TAG) and fill tank. Machine will lock otherwise.",note:""},
+  {code:"12109",name:"Activate new Solvent – machine will lock",cat:"ink",cause:"More solvent used than activated. Machine will lock automatically.",action:"Activate with new bottle (TAG) and fill tank.",note:""},
+  {code:"12110",name:"Activate new Solvent",cat:"ink",cause:"More solvent used than activated.",action:"Activate with new bottle (TAG) and fill tank.",note:""},
+  {code:"12111",name:"Ink Jet locked – Activate new Ink",cat:"ink",cause:"Ink jet is locked. More ink used than activated.",action:"Activate with new bottle (TAG) and fill tank.",note:""},
+  {code:"12112",name:"Ink Jet locked – Activate new Solvent",cat:"ink",cause:"Ink jet is locked. More solvent used than activated.",action:"Activate with new bottle (TAG) and fill tank.",note:""},
+  {code:"12113",name:"Ink refilled without activation",cat:"ink",cause:"Ink was refilled without TAG activation.",action:"Hold bottle to TAG-Reader for activation.",note:""},
+  {code:"12114",name:"Solvent refilled without activation",cat:"ink",cause:"Solvent was refilled without TAG activation.",action:"Hold bottle to TAG-Reader for activation.",note:""},
+  {code:"12116",name:"Less than 1MB free disk space",cat:"sys",cause:"Less than 1MB of free disk space available.",action:"Remove unnecessary files (jobs, fonts, or graphics) to free disk space.",note:""},
+  {code:"21310",name:"Ink tank low – Activate new bottle",cat:"ink",cause:"Ink tank reached low level position.",action:"Hold new bottle to TAG Reader, activate it, then fill complete bottle into ink tank immediately.",note:""},
+  {code:"21311",name:"Solvent tank low – Activate new bottle",cat:"ink",cause:"Solvent tank reached low level position.",action:"Hold new bottle to TAG Reader, activate it, then fill complete bottle into solvent tank immediately.",note:""},
+];
+
+const catLabels = {comm:"통신 오류",job:"작업/스크립트",mem:"메모리",hyd:"유압/점도",head:"프린트헤드",spd:"속도/인쇄",sys:"시스템",ink:"잉크/용제"};
+const catBadge  = {comm:"badge-comm",job:"badge-job",mem:"badge-mem",hyd:"badge-hyd",head:"badge-head",spd:"badge-spd",sys:"badge-sys",ink:"badge-ink"};
+
+const checkedSet = new Set();
+let currentCat      = "all";
+let searchTerm      = "";
+let checkedOnlyMode = false;
+
+function getFiltered() {
+  return errors.filter((e, i) => {
+    if (checkedOnlyMode) return checkedSet.has(i);
+    const catMatch  = currentCat === "all" || e.cat === currentCat;
+    const q         = searchTerm.toLowerCase();
+    const textMatch = !q
+      || e.code.toLowerCase().includes(q)
+      || e.name.toLowerCase().includes(q)
+      || e.cause.toLowerCase().includes(q)
+      || e.action.toLowerCase().includes(q);
+    return catMatch && textMatch;
+  });
+}
+
+function render() {
+  const tbody    = document.getElementById("tbody");
+  const countEl  = document.getElementById("count");
+  const filtered = getFiltered();
+
+  countEl.textContent = checkedOnlyMode
+    ? "체크된 항목 " + filtered.length + "개"
+    : "총 " + filtered.length + "개 항목";
+
+  tbody.innerHTML = filtered.map((e, localIdx) => {
+    const gi = errors.indexOf(e);
+    const checked = checkedSet.has(gi);
+    return `<tr class="${checked ? 'checked-row' : ''}" data-gi="${gi}">
+      <td class="col-chk"><input type="checkbox" class="cb row-cb" data-gi="${gi}" ${checked ? 'checked' : ''}></td>
+      <td class="col-idx">${localIdx + 1}</td>
+      <td class="col-code"><span class="code">${e.code}</span></td>
+      <td class="col-name"><div class="name">${e.name}</div><span class="badge ${catBadge[e.cat]}">${catLabels[e.cat]}</span></td>
+      <td class="col-cause cause-text">${e.cause}</td>
+      <td class="col-action">${e.action}</td>
+      <td class="col-note note-text">${e.note}</td>
+    </tr>`;
+  }).join("");
+
+  // master checkbox state
+  const masterCb = document.getElementById("masterCb");
+  const allChecked  = filtered.length > 0 && filtered.every(e => checkedSet.has(errors.indexOf(e)));
+  const someChecked = filtered.some(e => checkedSet.has(errors.indexOf(e)));
+  masterCb.checked       = allChecked;
+  masterCb.indeterminate = !allChecked && someChecked;
+
+  // fab counter
+  const fabCounter = document.getElementById("fabCounter");
+  const n = checkedSet.size;
+  fabCounter.textContent = n + "개 선택됨";
+  fabCounter.classList.toggle("visible", n > 0);
+
+  // banner
+  document.getElementById("modeBanner").classList.toggle("visible", checkedOnlyMode);
+}
+
+// row checkbox
+document.getElementById("tbody").addEventListener("change", function(e) {
+  if (!e.target.classList.contains("row-cb")) return;
+  const gi = parseInt(e.target.dataset.gi);
+  if (e.target.checked) {
+    checkedSet.add(gi);
+    e.target.closest("tr").classList.add("checked-row");
+  } else {
+    checkedSet.delete(gi);
+    e.target.closest("tr").classList.remove("checked-row");
+  }
+  // sync fab counter + master cb without full re-render
+  const n = checkedSet.size;
+  const fabCounter = document.getElementById("fabCounter");
+  fabCounter.textContent = n + "개 선택됨";
+  fabCounter.classList.toggle("visible", n > 0);
+  const filtered = getFiltered();
+  const masterCb = document.getElementById("masterCb");
+  const allChecked  = filtered.length > 0 && filtered.every(e2 => checkedSet.has(errors.indexOf(e2)));
+  const someChecked = filtered.some(e2 => checkedSet.has(errors.indexOf(e2)));
+  masterCb.checked = allChecked;
+  masterCb.indeterminate = !allChecked && someChecked;
+});
+
+// master checkbox
+document.getElementById("masterCb").addEventListener("change", function() {
+  getFiltered().forEach(e => {
+    const gi = errors.indexOf(e);
+    this.checked ? checkedSet.add(gi) : checkedSet.delete(gi);
+  });
+  render();
+});
+
+// check all / uncheck all (global)
+document.getElementById("btnCheckAll").addEventListener("click", function() {
+  errors.forEach((_, i) => checkedSet.add(i));
+  render();
+});
+document.getElementById("btnUncheckAll").addEventListener("click", function() {
+  checkedSet.clear();
+  if (checkedOnlyMode) { checkedOnlyMode = false; }
+  render();
+});
+
+// search
+document.getElementById("search").addEventListener("input", function() {
+  if (checkedOnlyMode) return;
+  searchTerm = this.value;
+  render();
+});
+
+// category filter
+document.getElementById("filters").addEventListener("click", function(e) {
+  if (!e.target.classList.contains("filter-btn")) return;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  e.target.classList.add("active");
+  currentCat = e.target.dataset.cat;
+  if (checkedOnlyMode) return;
+  render();
+});
+
+// FAB button
+document.getElementById("fabBtn").addEventListener("click", function() {
+  if (checkedSet.size === 0) {
+    alert("선택된 항목이 없습니다.\n체크박스를 먼저 선택해 주세요.");
+    return;
+  }
+  checkedOnlyMode = true;
+  render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// reset to full view
+document.getElementById("btnResetView").addEventListener("click", function() {
+  checkedOnlyMode = false;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
